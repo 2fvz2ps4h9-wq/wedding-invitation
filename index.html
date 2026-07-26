@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation - Mahmoud & Menna</title>
+    <title>wedding invitation</title>
     <!-- Google Fonts for Elegant Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
@@ -166,8 +166,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-style: italic;
-            color: #aaa;
         }
 
         .save-the-date {
@@ -273,7 +271,7 @@
             transform: translateY(-2px);
         }
 
-        /* 5. Guestbook Canvas & RSVP Section */
+        /* 5. Handwritten Note / Guestbook Section */
         .canvas-wrapper {
             background-color: var(--white);
             padding: 20px;
@@ -343,34 +341,35 @@
             color: var(--white);
         }
 
+        /* General Form Container Styles */
         .form-container {
-            margin-top: 25px;
             background-color: var(--white);
-            padding: 30px;
+            padding: 40px 30px;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             border: 1px solid var(--primary-pink);
             display: inline-block;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
             text-align: left;
+            margin: 0 auto;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
             font-size: 0.9rem;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: var(--dark-pink);
             font-family: 'Cinzel', serif;
         }
 
         .input-field {
             width: 100%;
-            padding: 10px 15px;
+            padding: 12px 15px;
             background: var(--light-pink);
             border: 1px solid var(--primary-pink);
             border-radius: 8px;
@@ -394,12 +393,19 @@
             width: 100%;
             font-family: 'Cinzel', serif;
             letter-spacing: 1px;
-            margin-top: 10px;
             transition: background 0.3s ease;
         }
 
         .submit-btn:hover {
             background-color: #a35f5f;
+        }
+
+        .info-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-style: italic;
         }
     </style>
 </head>
@@ -408,9 +414,9 @@
     <!-- 1. Envelope Section -->
     <div id="envelope-container" onclick="openInvitation()">
         <div class="envelope">
-            <div class="envelope-title">THE WEDDING OF</div>
+            <div class="envelope-title">YOU ARE INVITED</div>
             <div class="wax-seal">M&M</div>
-            <div class="click-to-open">Click to Open Invitation</div>
+            <div class="click-to-open">OPEN</div>
         </div>
     </div>
 
@@ -428,13 +434,13 @@
             </div>
 
             <div class="save-the-date">SAVE THE DATE</div>
-            <div class="exact-date">October 15, 2026</div>
+            <div class="exact-date">14/8/2026</div>
             <div class="divider"></div>
         </section>
 
-        <!-- 3. Countdown Timer Section -->
+        <!-- 3. Countdown Timer Section (Our Special Day) -->
         <section>
-            <h2 class="section-title">Countdown to Our Big Day</h2>
+            <h2 class="section-title">Our Special Day</h2>
             <div class="countdown-container">
                 <div class="countdown-box">
                     <span class="countdown-number" id="days">--</span>
@@ -461,20 +467,19 @@
             <h2 class="section-title">The Venue</h2>
             <p class="section-subtitle">Where we begin forever</p>
             <div class="venue-card">
-                <div class="venue-name">Grand Royal Hall</div>
-                <div class="venue-info">Cairo, Egypt<br>Waiting to celebrate with our dearest family and friends.</div>
-                <a href="https://maps.google.com" target="_blank" class="maps-btn">
-                    <span>📍 View on Google Maps</span>
+                <div class="venue-name">Festival Land</div>
+                <div class="venue-info">August 14, 2026<br>Time: 7:00 PM<br>We will be honored by your presence!</div>
+                <a href="https://maps.google.com/?q=Festival+Land" target="_blank" class="maps-btn">
+                    <span>📍 View Location on Map</span>
                 </a>
             </div>
             <div class="divider"></div>
         </section>
 
-        <!-- 5. Guestbook & RSVP Section linked to your email -->
+        <!-- 5. Handwritten Note / Message Section -->
         <section>
-            <h2 class="section-title">Guestbook & Wishes</h2>
-            <p class="section-subtitle">Leave your mark and blessings</p>
-            
+            <h2 class="section-title">Write Us a Message</h2>
+            <p class="section-subtitle">Leave us a handwritten note or message</p>
             <div class="canvas-wrapper">
                 <canvas id="guestbook-canvas" width="500" height="300"></canvas>
                 <div class="controls">
@@ -488,29 +493,55 @@
                     <button class="brush-btn active" onclick="setMode('pen', this)">Pen</button>
                     <button class="brush-btn" onclick="clearCanvas()">Clear Canvas</button>
                 </div>
+            </div>
+            <div class="divider"></div>
+        </section>
 
-                <!-- Form connected to Formspree for salsabeel302002@gmail.com -->
-                <div class="form-container" style="border:none; box-shadow:none; padding:20px 0 0 0; margin-top:20px;">
-                    <form action="https://formspree.io/f/xjgnpzno" method="POST">
-                        <input type="hidden" name="_to" value="salsabeel302002@gmail.com">
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" class="input-field" placeholder="Enter your name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="attendance">Attendance Status</label>
-                            <select id="attendance" name="attendance" class="input-field" required>
-                                <option value="Joyfully Accepts">Joyfully Accepts</option>
-                                <option value="Regretfully Declines">Regretfully Declines</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Wishes & Message</label>
-                            <textarea id="message" name="message" class="input-field" rows="3" placeholder="Write your warm wishes..." required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send RSVP & Wishes</button>
-                    </form>
-                </div>
+        <!-- 6. RSVP Section -->
+        <section>
+            <h2 class="section-title">Will you join us?</h2>
+            <p class="section-subtitle">We would be honored to have you celebrate with us on our special day</p>
+            <div class="form-container">
+                <form action="https://formspree.io/f/xjgnpzno" method="POST">
+                    <input type="hidden" name="_to" value="salsabeel302002@gmail.com">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" class="input-field" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendance">Attendance</label>
+                        <select id="attendance" name="attendance" class="input-field" required>
+                            <option value="Attending">Attending</option>
+                            <option value="Not Attending">Not Attending</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message / Wishes</label>
+                        <textarea id="message" name="message" class="input-field" rows="3" placeholder="Write your warm wishes..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+            <div class="divider"></div>
+        </section>
+
+        <!-- 7. Share Your Photo Section -->
+        <section>
+            <h2 class="section-title">Share Your Photo from the day</h2>
+            <p class="info-note">It's still a bit early for photos from the event, but once you take them, please share them with us via scan code or upload here!</p>
+            <div class="form-container">
+                <form action="https://formspree.io/f/xjgnpzno" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="_to" value="salsabeel302002@gmail.com">
+                    <div class="form-group">
+                        <label for="uploader-name">Your Name</label>
+                        <input type="text" id="uploader-name" name="uploader_name" class="input-field" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo-file">Upload Photo</label>
+                        <input type="file" id="photo-file" name="photo" class="input-field" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Photo to Email</button>
+                </form>
             </div>
         </section>
 
@@ -531,8 +562,8 @@
             }, 800);
         }
 
-        // Countdown Timer Script
-        const weddingDate = new Date("October 15, 2026 00:00:00").getTime();
+        // Countdown Timer Script for August 14, 2026 19:00:00
+        const weddingDate = new Date("August 14, 2026 19:00:00").getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -556,7 +587,7 @@
 
         setInterval(updateCountdown, 1000);
 
-        // Canvas Drawing Script
+        // Canvas Drawing Script for Handwritten Notes
         const canvas = document.getElementById('guestbook-canvas');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
