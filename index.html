@@ -166,6 +166,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            font-style: italic;
+            color: #aaa;
         }
 
         .save-the-date {
@@ -271,34 +273,104 @@
             transform: translateY(-2px);
         }
 
-        /* 5. Messages / RSVP Section linked to Email */
-        .form-container {
+        /* 5. Guestbook Canvas & RSVP Section */
+        .canvas-wrapper {
             background-color: var(--white);
-            padding: 40px 30px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             border: 1px solid var(--primary-pink);
             display: inline-block;
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
+        }
+
+        #guestbook-canvas {
+            border: 1px dashed var(--primary-pink);
+            background-color: #fafafa;
+            border-radius: 6px;
+            cursor: crosshair;
+            touch-action: none;
+            max-width: 100%;
+        }
+
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .control-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .color-picker.active {
+            border-color: var(--text-dark);
+            transform: scale(1.1);
+        }
+
+        .brush-btn {
+            background-color: var(--light-pink);
+            border: 1px solid var(--primary-pink);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .brush-btn.active {
+            background-color: var(--dark-pink);
+            color: var(--white);
+        }
+
+        .form-container {
+            margin-top: 25px;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid var(--primary-pink);
+            display: inline-block;
+            width: 100%;
+            max-width: 600px;
             text-align: left;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
             font-size: 0.9rem;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             color: var(--dark-pink);
             font-family: 'Cinzel', serif;
         }
 
-        .form-control {
+        .input-field {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 15px;
             background: var(--light-pink);
             border: 1px solid var(--primary-pink);
             border-radius: 8px;
@@ -306,7 +378,7 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        .form-control:focus {
+        .input-field:focus {
             outline: none;
             border-color: var(--dark-pink);
         }
@@ -315,13 +387,14 @@
             background-color: var(--dark-pink);
             color: var(--white);
             border: none;
-            padding: 12px 30px;
+            padding: 12px 25px;
             border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
             font-family: 'Cinzel', serif;
             letter-spacing: 1px;
+            margin-top: 10px;
             transition: background 0.3s ease;
         }
 
@@ -332,7 +405,7 @@
 </head>
 <body>
 
-    <!-- 1. Envelope Overlay -->
+    <!-- 1. Envelope Section -->
     <div id="envelope-container" onclick="openInvitation()">
         <div class="envelope">
             <div class="envelope-title">THE WEDDING OF</div>
@@ -341,10 +414,10 @@
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Hidden Main Content -->
     <div id="main-content">
         
-        <!-- 2. Couple & Date Section -->
+        <!-- 2. Couple Photo & Date Section -->
         <section>
             <div class="section-subtitle">You Are Invited</div>
             <h1 class="couple-names">Mahmoud & Menna</h1>
@@ -359,7 +432,7 @@
             <div class="divider"></div>
         </section>
 
-        <!-- 3. Countdown Section -->
+        <!-- 3. Countdown Timer Section -->
         <section>
             <h2 class="section-title">Countdown to Our Big Day</h2>
             <div class="countdown-container">
@@ -383,7 +456,7 @@
             <div class="divider"></div>
         </section>
 
-        <!-- 4. Venue Section -->
+        <!-- 4. Venue & Location Section -->
         <section>
             <h2 class="section-title">The Venue</h2>
             <p class="section-subtitle">Where we begin forever</p>
@@ -397,30 +470,47 @@
             <div class="divider"></div>
         </section>
 
-        <!-- 5. RSVP & Messages Section (Linked to your email) -->
+        <!-- 5. Guestbook & RSVP Section linked to your email -->
         <section>
-            <h2 class="section-title">Wishes & RSVP</h2>
-            <p class="section-subtitle">Send us your blessing</p>
-            <div class="form-container">
-                <form action="https://formspree.io/f/xjgnpzno" method="POST">
-                    <input type="hidden" name="_to" value="salsabeel302002@gmail.com">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+            <h2 class="section-title">Guestbook & Wishes</h2>
+            <p class="section-subtitle">Leave your mark and blessings</p>
+            
+            <div class="canvas-wrapper">
+                <canvas id="guestbook-canvas" width="500" height="300"></canvas>
+                <div class="controls">
+                    <div class="control-group">
+                        <span class="control-label">Color:</span>
+                        <div class="color-picker active" style="background-color: #4a3e3e;" onclick="setColor('#4a3e3e', this)"></div>
+                        <div class="color-picker" style="background-color: #b87373;" onclick="setColor('#b87373', this)"></div>
+                        <div class="color-picker" style="background-color: #dfba73;" onclick="setColor('#dfba73', this)"></div>
+                        <div class="color-picker" style="background-color: #d94e4e;" onclick="setColor('#d94e4e', this)"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="attendance">Will you attend?</label>
-                        <select id="attendance" name="attendance" class="form-control" required>
-                            <option value="Joyfully Accepts">Joyfully Accepts</option>
-                            <option value="Regretfully Declines">Regretfully Declines</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Wishes & Messages</label>
-                        <textarea id="message" name="message" class="form-control" rows="4" placeholder="Write your warm wishes here..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send RSVP & Wishes</button>
-                </form>
+                    <button class="brush-btn active" onclick="setMode('pen', this)">Pen</button>
+                    <button class="brush-btn" onclick="clearCanvas()">Clear Canvas</button>
+                </div>
+
+                <!-- Form connected to Formspree for salsabeel302002@gmail.com -->
+                <div class="form-container" style="border:none; box-shadow:none; padding:20px 0 0 0; margin-top:20px;">
+                    <form action="https://formspree.io/f/xjgnpzno" method="POST">
+                        <input type="hidden" name="_to" value="salsabeel302002@gmail.com">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" class="input-field" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attendance">Attendance Status</label>
+                            <select id="attendance" name="attendance" class="input-field" required>
+                                <option value="Joyfully Accepts">Joyfully Accepts</option>
+                                <option value="Regretfully Declines">Regretfully Declines</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Wishes & Message</label>
+                            <textarea id="message" name="message" class="input-field" rows="3" placeholder="Write your warm wishes..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send RSVP & Wishes</button>
+                    </form>
+                </div>
             </div>
         </section>
 
@@ -465,6 +555,67 @@
         }
 
         setInterval(updateCountdown, 1000);
+
+        // Canvas Drawing Script
+        const canvas = document.getElementById('guestbook-canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let currentColor = '#4a3e3e';
+        let isEraser = false;
+
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            
+            ctx.lineWidth = isEraser ? 15 : 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = isEraser ? '#fafafa' : currentColor;
+
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+
+            ctx.lineTo(clientX - rect.left, clientY - rect.top);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(clientX - rect.left, clientY - rect.top);
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function setColor(color, element) {
+            currentColor = color;
+            isEraser = false;
+            document.querySelectorAll('.color-picker').forEach(el => el.classList.remove('active'));
+            if(element) element.classList.add('active');
+        }
+
+        function setMode(mode, element) {
+            isEraser = (mode === 'eraser');
+            document.querySelectorAll('.brush-btn').forEach(el => el.classList.remove('active'));
+            if(element) element.classList.add('active');
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
     </script>
 </body>
 </html>
